@@ -26,10 +26,12 @@ The buildprocess makes a few small changes to the original
 TODO
 ----
 
- + Update version in composer.json after build
+ + Update version in `composer.json` after build
  + Check if newer [jQuery File Upload Plugin] really affects the lib.
+ + CodeSniffer
  + PSR-2 - camel case methods!
  + Unit Testing
+ + Count builds?
 
 
 
@@ -53,4 +55,4 @@ $uh = new JqueryFileUploadHandler();
 [PSR-1]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md
 [PSR-2]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md
 [bower]: https://github.com/bower/bower
-
+[autoload_classmap.php]: https://github.com/websafe/lib-websafe-blueimp-jquery-file-upload-handler/blob/master/autoload_classmap.php
