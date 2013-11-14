@@ -42,7 +42,7 @@ cd ${PROJECT_DIR};
 LASTSOURCECOMMIT=$(git ls-remote ${SOURCEREPO} ${SOURCEBRANCH} master | head -n1 | cut -f1)
 
 #
-if [ "${LASTSOURCECOMMIT}" = "$(cat ./COMMIT)" ];
+if [ "${LASTSOURCECOMMIT}" = "$(cat ${SCRIPT_DIR}/COMMIT)" ];
 then
     echo "No changes detected";
     exit 0;
@@ -96,7 +96,7 @@ else
     #
     md5sum \
 	library/Websafe/Blueimp/JqueryFileUploadHandler.php \
-	> scripts/build/CHECKSUM.md5;
+	> ${SCRIPT_DIR}/CHECKSUM.md5;
     #
     #
     # Generate classmap
@@ -104,8 +104,8 @@ else
     #
     #make_distclean;
     # Storing current commit and version in this repo
-    echo ${LASTSOURCECOMMIT} > ./COMMIT
-    echo ${NEWLIBVERSION} > ./VERSION
+    echo ${LASTSOURCECOMMIT} > ${SCRIPT_DIR}/COMMIT
+    echo ${NEWLIBVERSION} > ${SCRIPT_DIR}/VERSION
     # Adding files to repo (not really needed anymore)
     git add \
 	scripts/build/CHECKSUM.md5 \
@@ -121,17 +121,17 @@ else
 	library
     # Commiting changes to local repo
     echo "CHECKSUM"
-    if git commit scripts/build/CHECKSUM.md5 -m "Current library version is ${NEWLIBVERSION}.";
+    if git commit ${SCRIPT_DIR}/CHECKSUM.md5 -m "Current library version is ${NEWLIBVERSION}.";
     then
 	echo "Changed.";
     fi
     echo "COMMIT"
-    if git commit scripts/build/COMMIT -m "Current relase is based on commit #${LASTSOURCECOMMIT}.";
+    if git commit ${SCRIPT_DIR}/COMMIT -m "Current relase is based on commit #${LASTSOURCECOMMIT}.";
     then
 	echo "Changed.";
     fi
     echo "VERSION"
-    if git commit scripts/build/VERSION -m "Current library version is ${NEWLIBVERSION}.";
+    if git commit ${SCRIPT_DIR}/VERSION -m "Current library version is ${NEWLIBVERSION}.";
     then
 	echo "Changed.";
     fi
