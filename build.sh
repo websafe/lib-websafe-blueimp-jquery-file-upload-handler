@@ -110,6 +110,7 @@ else
     git commit ./VERSION -m "Current library version is ${NEWLIBVERSION}.";
     git commit ./library/Websafe/Blueimp/${CLASSFILE} -m "Updated class with #${LASTSOURCECOMMIT}.";
     git commit -a -m "Updated with commit #${LASTSOURCECOMMIT}";
+    git push -u origin master
 fi
 #
 make_distclean
