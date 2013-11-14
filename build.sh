@@ -102,7 +102,9 @@ else
     # Copying lib to final dest.
     cp -v ./build/${CLASSFILE} ./library/Websafe/Blueimp/;
     #
-    #./vendor/bin/zf.php classmap generate ./library/
+    make_distclean;
+    #
+    #./vendor/bin/zf.php classmap generate .
     # Storing current commit and version in this repo
     echo ${LASTSOURCECOMMIT} > ./COMMIT
     echo ${NEWLIBVERSION} > ./VERSION
