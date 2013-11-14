@@ -24,7 +24,7 @@
     },
     "autoload": {
         "psr-0": {
-            "Websafe\\Blueimp\\": "library/Websafe"
+            "Websafe": "library/"
         },
         "classmap": [
             "./library/autoload_classmap.php"
