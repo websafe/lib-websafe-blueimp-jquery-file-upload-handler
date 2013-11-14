@@ -19,12 +19,16 @@
 	"php": ">=5.3.3"
     },
     "require-dev": {
+	"zendframework/zftool": "dev-master",
 	"fabpot/PHP-CS-Fixer": "dev-master"
     },
     "autoload": {
         "psr-0": {
             "Websafe\\Blueimp\\": "library/Websafe"
-        }
+        },
+        "classmap": [
+            "./library/autoload_classmap.php"
+        ]
     },
     "extra": {
         "branch-alias": {
