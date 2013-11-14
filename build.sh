@@ -41,7 +41,16 @@ cd ${SCRIPT_DIR};
 LASTSOURCECOMMIT=$(git ls-remote ${SOURCEREPO} ${SOURCEBRANCH} master | head -n1 | cut -f1)
 
 #
-composer update
+if [ ! -d ./vendor/bin ];
+then
+    mkdir -p vendor/bin;
+fi
+
+#
+curl -sS https://getcomposer.org/installer | php -- --install-dir=vendor/bin/
+
+#
+./vendor/bin/composer.phar update
 
 #
 if [ "${LASTSOURCECOMMIT}" = "$(cat ./COMMIT)" ];
