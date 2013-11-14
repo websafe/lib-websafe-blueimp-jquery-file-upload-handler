@@ -1,4 +1,4 @@
-jQuery File Upload Handler for PHP
+jQuery File Upload PHP backend / upload handler
 ===============================================================================
 
 This project contains the PHP backend from the [jQuery File Upload Plugin]
