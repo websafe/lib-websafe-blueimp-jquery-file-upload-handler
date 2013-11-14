@@ -40,17 +40,10 @@ cd ${SCRIPT_DIR};
 #
 LASTSOURCECOMMIT=$(git ls-remote ${SOURCEREPO} ${SOURCEBRANCH} master | head -n1 | cut -f1)
 
-#
-if [ ! -d ./vendor/bin ];
-then
-    mkdir -p vendor/bin;
-fi
+
 
 #
-curl -sS https://getcomposer.org/installer | php -- --install-dir=vendor/bin/
-
-#
-./vendor/bin/composer.phar update
+#./vendor/bin/composer.phar update
 
 #
 if [ "${LASTSOURCECOMMIT}" = "$(cat ./COMMIT)" ];
@@ -61,8 +54,15 @@ else
     #
     make_clean;
     make_dirs;
+    #
+    if [ ! -d ./vendor/bin ];
+    then
+        mkdir -p vendor/bin;
+    fi
+    #
+    curl -sS https://getcomposer.org/installer | php -- --install-dir=vendor/bin/
     # Updating composer dev dependencies
-    composer update
+    ./vendor/bin/composer.phar update
     #
     git clone ${SOURCEREPO} ./build/source-repo;
     # Detecting verion of new class.
@@ -79,6 +79,7 @@ else
     cat ./build/${CLASSFILE} \
 	| sed \
 	    -e "s/class UploadHandler/namespace ${NAMESPACE};\n\nclass ${CLASSNAME}/g" \
+	    -e 's/stdClass(/\\stdClass\(/g' \
 	    > ./build/${CLASSFILE}.tmp;
     # Fix formatting
     if ./vendor/bin/php-cs-fixer \
@@ -101,7 +102,7 @@ else
     # Copying lib to final dest.
     cp -v ./build/${CLASSFILE} ./library/Websafe/Blueimp/;
     #
-    ./vendor/bin/zf.php classmap generate ./library/
+    #./vendor/bin/zf.php classmap generate ./library/
     # Storing current commit and version in this repo
     echo ${LASTSOURCECOMMIT} > ./COMMIT
     echo ${NEWLIBVERSION} > ./VERSION

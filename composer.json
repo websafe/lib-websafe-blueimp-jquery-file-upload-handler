@@ -25,10 +25,7 @@
     "autoload": {
         "psr-0": {
             "Websafe": "library/"
-        },
-        "classmap": [
-            "./library/autoload_classmap.php"
-        ]
+        }
     },
     "extra": {
         "branch-alias": {
