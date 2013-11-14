@@ -28,7 +28,8 @@ TODO
 
  + Update version in `composer.json` after build
  + Check if newer [jQuery File Upload Plugin] really affects the lib.
- + CodeSniffer
+ + Travis
+ + [CodeSniffer]
  + PSR-2 - camel case methods!
  + Unit Testing
  + Count builds?
@@ -56,3 +57,6 @@ $uh = new JqueryFileUploadHandler();
 [PSR-2]: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md
 [bower]: https://github.com/bower/bower
 [autoload_classmap.php]: https://github.com/websafe/lib-websafe-blueimp-jquery-file-upload-handler/blob/master/autoload_classmap.php
+[library/Websafe/Blueimp/JqueryFileUploadHandler.php]: https://github.com/websafe/lib-websafe-blueimp-jquery-file-upload-handler/blob/master/library/Websafe/Blueimp/JqueryFileUploadHandler.php
+[PHP-CS-Fixer]: https://github.com/fabpot/PHP-CS-Fixer
+[CodeSniffer]: https://github.com/squizlabs/PHP_CodeSniffer
