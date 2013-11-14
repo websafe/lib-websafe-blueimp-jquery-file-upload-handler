@@ -1,0 +1,34 @@
+{
+    "name": "websafe/lib-websafe-blueimp-jquery-file-upload-handler",
+    "description": "Repackaged PHP handler from Blueimp Jquery-File-Upload. Composer and autoloader ready. Contains only the PHP handler class. Install frontend assets with bower.",
+    "license" : "MIT",
+    "authors": [
+        {
+            "name": "Sebastian Tschan",
+            "homepage": "https://blueimp.net",
+            "role": "Developer"
+        },
+        {
+            "name": "Thomas Szteliga",
+            "email": "ts@websafe.pl",
+            "homepage": "https://websafe.pl",
+            "role": "Packager"
+        }
+    ],
+    "require": {
+	"php": ">=5.3.3"
+    },
+    "require-dev": {
+	"fabpot/PHP-CS-Fixer": "dev-master"
+    },
+    "autoload": {
+        "psr-0": {
+            "Websafe\\Blueimp\\": "library/Websafe/Blueimp"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.0.1-dev"
+        }
+    }
+}
