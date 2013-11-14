@@ -23,7 +23,7 @@
     },
     "autoload": {
         "psr-0": {
-            "Websafe\\Blueimp\\": "library/Websafe/Blueimp"
+            "Websafe\\Blueimp\\": "library/Websafe"
         }
     },
     "extra": {
