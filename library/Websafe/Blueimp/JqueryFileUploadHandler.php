@@ -1,6 +1,6 @@
 <?php
 /*
- * jQuery File Upload Plugin PHP Class 7.0.2
+ * jQuery File Upload Plugin PHP Class 7.1.0
  * https://github.com/blueimp/jQuery-File-Upload
  *
  * Copyright 2010, Sebastian Tschan
@@ -428,8 +428,8 @@ class JqueryFileUploadHandler
         );
     }
 
-    protected function get_unique_filename($name,
-            $type = null, $index = null, $content_range = null) {
+    protected function get_unique_filename($file_path, $name, $size, $type, $error,
+            $index, $content_range) {
         while(is_dir($this->get_upload_path($name))) {
             $name = $this->upcount_name($name);
         }
@@ -445,8 +445,8 @@ class JqueryFileUploadHandler
         return $name;
     }
 
-    protected function trim_file_name($name,
-            $type = null, $index = null, $content_range = null) {
+    protected function trim_file_name($file_path, $name, $size, $type, $error,
+            $index, $content_range) {
         // Remove path information and dots around the filename, to prevent uploading
         // into different directories or replacing hidden system files.
         // Also remove control characters and spaces (\x00..\x20) around the filename:
@@ -457,17 +457,44 @@ class JqueryFileUploadHandler
         }
         // Add missing file extension for known image types:
         if (strpos($name, '.') === false &&
-            preg_match('/^image\/(gif|jpe?g|png)/', $type, $matches)) {
+                preg_match('/^image\/(gif|jpe?g|png)/', $type, $matches)) {
             $name .= '.'.$matches[1];
+        }
+        if (function_exists('exif_imagetype')) {
+            switch(exif_imagetype($file_path)){
+                case IMAGETYPE_JPEG:
+                    $extensions = array('jpg', 'jpeg');
+                    break;
+                case IMAGETYPE_PNG:
+                    $extensions = array('png');
+                    break;
+                case IMAGETYPE_GIF:
+                    $extensions = array('gif');
+                    break;
+            }
+            // Adjust incorrect image file extensions:
+            if (!empty($extensions)) {
+                $parts = explode('.', $name);
+                $extIndex = count($parts) - 1;
+                $ext = strtolower(@$parts[$extIndex]);
+                if (!in_array($ext, $extensions)) {
+                    $parts[$extIndex] = $extensions[0];
+                    $name = implode('.', $parts);
+                }
+            }
         }
         return $name;
     }
 
-    protected function get_file_name($name,
-            $type = null, $index = null, $content_range = null) {
+    protected function get_file_name($file_path, $name, $size, $type, $error,
+            $index, $content_range) {
         return $this->get_unique_filename(
-            $this->trim_file_name($name, $type, $index, $content_range),
+            $file_path,
+            $this->trim_file_name($file_path, $name, $size, $type, $error,
+                $index, $content_range),
+            $size,
             $type,
+            $error,
             $index,
             $content_range
         );
@@ -615,25 +642,7 @@ class JqueryFileUploadHandler
         }
         list($file_path, $new_file_path) =
             $this->get_scaled_image_file_paths($file_name, $version);
-        if (function_exists('exif_imagetype')) {
-          //use the signature of the file
-          switch(exif_imagetype($file_path)){
-            case IMAGETYPE_JPEG:
-              $type = 'jpg';
-              break;
-            case IMAGETYPE_PNG:
-              $type = 'png';
-              break;
-            case IMAGETYPE_GIF:
-              $type = 'gif';
-              break;
-            default:
-              $type = '';
-          }
-        }else {
-          //use the extention;
-          $type = strtolower(substr(strrchr($file_name, '.'), 1));
-        }
+        $type = strtolower(substr(strrchr($file_name, '.'), 1));
         switch ($type) {
             case 'jpg':
             case 'jpeg':
@@ -1016,7 +1025,8 @@ class JqueryFileUploadHandler
     protected function handle_file_upload($uploaded_file, $name, $size, $type, $error,
             $index = null, $content_range = null) {
         $file = new \stdClass();
-        $file->name = $this->get_file_name($name, $type, $index, $content_range);
+        $file->name = $this->get_file_name($uploaded_file, $name, $size, $type, $error,
+            $index, $content_range);
         $file->size = $this->fix_integer_overflow(intval($size));
         $file->type = $type;
         if ($this->validate($uploaded_file, $file, $error, $index)) {
