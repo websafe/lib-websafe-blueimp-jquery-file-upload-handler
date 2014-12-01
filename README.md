@@ -17,7 +17,6 @@ The buildprocess makes a few small changes to the original
 
  + a namespace is being added (`Websafe\Blueimp`),
  + The class is being renamed (`UploadHandler` => `JqueryFileUploadHandler`),
- + `stdClass` is being prefixed with `\`,
  + the code is being formatted using [php-cs-fixer],
  + an autoload classmap is generated ([autoload_classmap.php]).
 
