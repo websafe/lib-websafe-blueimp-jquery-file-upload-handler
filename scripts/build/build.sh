@@ -78,7 +78,7 @@ else
     # Updating composer dev dependencies
     ./vendor/bin/composer.phar update
     #
-    git clone ${SOURCEREPO} ./build/source-repo;
+    git clone -b ${SOURCEBRANCH} ${SOURCEREPO} ./build/source-repo;
     # Detecting verion of new class.
     NEWLIBVERSION=$(
 	grep -m1 -oE \
@@ -93,12 +93,11 @@ else
     cat ./build/${CLASSFILE} \
 	| sed \
 	    -e "s/class UploadHandler/namespace ${NAMESPACE};\n\nclass ${CLASSNAME}/g" \
-	    -e 's/stdClass(/\\stdClass\(/g' \
 	    > ./build/${CLASSFILE}.tmp;
     # Fixing formatting
     if ./vendor/bin/php-cs-fixer \
 	--verbose fix ./build/${CLASSFILE}.tmp \
-	--level=all;
+	--level=psr2;
     then
 	echo "Fixing done, but no changes made?";
     else
@@ -169,7 +168,7 @@ else
     fi
     #
     echo "PUSHING to GitHub..."
-    git push -u origin master
+    git push -u origin develop
 fi
 #
 #make_distclean
