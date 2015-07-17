@@ -76,7 +76,7 @@ else
     curl -sS https://getcomposer.org/installer \
 	| php -- --install-dir=vendor/bin/
     # Updating composer dev dependencies
-    ./vendor/bin/composer.phar update
+    COMPOSER_PROCESS_TIMEOUT=6000 ./vendor/bin/composer.phar update
     #
     git clone -b ${SOURCEBRANCH} ${SOURCEREPO} ./build/source-repo;
     # Detecting verion of new class.
