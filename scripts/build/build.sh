@@ -83,7 +83,7 @@ else
     NEWLIBVERSION=$(
 	grep -m1 -oE \
 	    "[0-9]\.[0-9]{1,}\.[0-9]{1,}" \
-	    ./build/source-repo/server/php/UploadHandler.php;
+	    ./build/source-repo/package.json;
     );
     # Copying original class to build dir
     cp -v \
