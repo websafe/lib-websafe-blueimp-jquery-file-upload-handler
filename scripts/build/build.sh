@@ -170,7 +170,9 @@ else
     git tag -a v${NEWLIBVERSION} -m "Current library version is ${NEWLIBVERSION}."
     #
     echo "PUSHING to GitHub..."
-    git push -u origin develop
+    git push -u origin master
+    # Push tag
+    git push --tags origin master
 fi
 #
 #make_distclean
