@@ -166,6 +166,8 @@ else
     then
 	echo "Changed."
     fi
+    # Tag with current version
+    git tag -a v${NEWLIBVERSION} -m "Current library version is ${NEWLIBVERSION}."
     #
     echo "PUSHING to GitHub..."
     git push -u origin develop
